@@ -1,0 +1,130 @@
+#include<stdio.h>
+struct node{
+	int data;
+	struct node *left;
+	struct node *right;
+};
+struct node* insert(struct node *r,int e)
+{
+//	struct node *n=(struct node*)malloc(sizeof(struct node));
+	if(r==NULL)
+	{
+		struct node *n=(struct node*)malloc(sizeof(struct node));
+		n->data=e;
+		n->left=NULL;
+		n->right=NULL;
+		r=n;
+	}
+	else if(e>r->data)
+	r->right= insert(r->right,e);
+	else if(e<r->data)
+	r->left= insert(r->left,e);
+	return r;	
+	
+}
+void preorder(struct node *r)
+{
+	if(r!=NULL)
+	{
+		printf("%d ",r->data);
+		preorder(r->left);
+		preorder(r->right);
+	}
+}
+void postorder(struct node *r)
+{
+	if(r!=NULL)
+	{
+		postorder(r->left);
+		postorder(r->right);
+		printf("%d ",r->data);
+	}
+}
+void inorder(struct node* r)
+{
+	if(r!=NULL)
+	{
+		inorder(r->left);
+		printf("%d ",r->data);
+		inorder(r->right);
+	}
+}
+struct node* search(struct node *r,int e)
+{
+	if(r->data==e)
+	{
+		printf("The element is found");
+		return r;
+	}
+	else if(e>r->data)
+	r=search(r->right,e);
+	else if(e<r->data)
+	r=search(r->left,e);
+	else
+	{
+		printf("not found");
+		return r;
+	}
+}
+int findmax(struct node *r)
+{
+	while(r->right!=NULL)
+	{
+		r=r->right;
+	}
+   return r->data;
+}
+int findmin(struct node *r)
+{
+	while(r->left!=NULL)
+	{
+		r=(r->left);
+	}
+	return r->data;
+}
+int main()
+{
+	int n,k,m;
+	struct node *root=NULL;
+	while(1)
+	{
+		printf("1.Insert\n2.inorder\n3.preorder\n4.postorder\n5.search\n6.findmin\n7.findmax\n8.exit");
+		printf("\nEnter Choice:");
+		scanf("%d",&n);
+		switch(n)
+		{
+			case 1:
+				printf("Enter num:");
+				scanf("%d",&k);
+				root=insert(root,k);
+				break;
+			case 2:
+				inorder(root);
+				break;
+			case 3:
+				preorder(root);
+				break;
+			case 4:
+				postorder(root);
+				break;
+			case 5:
+				printf("Enter element to be search:");
+				scanf("%d",&k);
+				search(root,k);
+				break;
+			case 6:
+				m=findmin(root);
+				printf("min=%d",m);
+				break;
+			case 7:
+		    	m=findmax(root);
+		    	printf("max=%d",m);
+		    	break;
+		    case 8:
+		    	exit(0);
+		    default:
+		    	break;
+								
+		}
+	}
+}
