@@ -1,0 +1,61 @@
+#include<stdio.h>
+struct node{
+	int data;
+	struct node *left;
+	struct node *right;
+}*r=NULL;
+struct node* insert(struct node *r,int e)
+{
+	if(r==NULL)
+	{
+		struct node *n=(struct node*)malloc(sizeof(struct node));
+		n->data=e;
+		n->left=NULL;
+		n->right=NULL;
+		r=n;
+	}
+	else if(e>r->data)
+	r->right= insert(r->right,e);
+	else if(e<r->data)
+	r->left= insert(r->left,e);
+	return r;	
+	
+}
+struct node * lca(struct node * root,int n1,int n2)
+{
+	if(root==NULL)
+	return NULL;
+	if(root->data>n1 && root->data>n2)
+    return lca(root->left,n1,n2);
+    if(root->data<n1 && root->data<n2)
+    return lca(root->right,n1,n2);
+    return root;
+    
+}
+void main()
+{
+	int choice,n1,n2,k;
+	while(1)
+	{
+		printf("1.Insert\n2.LCA\n3.exit()\n");
+		printf("Enter Choice:");
+		scanf("%d",&choice);
+		switch(choice){
+			case 1:
+				printf("Enter Element:");
+				scanf("%d",&k);
+				r=insert(r,k);
+				break;
+			case 2:
+				printf("Enter Two numbers:");
+				scanf("%d %d",&n1,&n2);
+				struct node *s=lca(r,n1,n2);
+				printf("Lca:%d",s->data);
+				break;
+			case 3:
+				exit(1);
+			default:
+				break;
+		}
+	}
+}
