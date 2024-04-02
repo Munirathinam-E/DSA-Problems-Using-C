@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<String.h>
+void freq(char *str)
+{
+	int count[256]={0},i,n=strlen(str),j;
+	for(i=0;i<n;i++)
+	count[str[i]]++;
+	for(i=0;i<n-1;i++)
+	{
+		for(j=0;j<n-i-1;j++)
+		{
+			if((count[str[j]]<count[str[j+1]])||(count[str[j]]==count[str[j+1]])&&(str[j]>str[j+1]))
+			{
+				char s=str[j];
+				str[j]=str[j+1];
+				str[j+1]=s;
+			}
+		}
+	}
+}
+int main()
+{
+	char s[100];
+	printf("Enter the String:");
+	scanf("%s",s);
+	freq(s);
+	printf("The String:%s",s);
+}
