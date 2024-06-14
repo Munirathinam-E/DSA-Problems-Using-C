@@ -1,0 +1,30 @@
+#include<stdio.h>
+#include<stdlib.h>
+int main(){
+	int arr[]={8,2,5,4,3,0,1,3,2,5,8,3};
+	int n=sizeof(arr)/sizeof(arr[0]);
+	int i=0,max=-1;
+	int count[100];
+	for(i=0;i<n;i++){
+		count[arr[i]]++;
+		if(max<arr[i])
+		max=arr[i];
+	}
+	
+	int cum[max+1];
+	cum[0]=count[0];
+	for(i=1;i<max+1;i++){
+		cum[i]=cum[i-1]+count[i];
+	}
+	int out[n];
+	for(i=0;i<n;i++){
+		out[cum[arr[i]]-1]=arr[i];
+		cum[arr[i]]--;
+	}
+	
+	for(i=0;i<n;i++){
+		printf("%d ",out[i]);
+	}
+	return 0;
+	
+}
